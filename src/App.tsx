@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Layout } from "./components/layout";
+import { GlobalStyle } from "./globalStyle";
+import { ChatPage } from "./pages/chat-page";
+import { WelcomePage } from "./pages/welcome-page";
+import { AppBody } from "./styled";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppBody>
+      <GlobalStyle />
+      <Layout>
+        <ChatPage
+          chat={{ id: 1, name: "testChat", creatorId: 1 }}
+          chatInfo={{
+            id: 1,
+            chatId: 1,
+            messages: [],
+            users: [
+              {
+                id: 1,
+                username: "Oleg Jabrony",
+                login: "tt@gmail.com",
+                statusId: 1,
+              },
+            ],
+          }}
+        ></ChatPage>
+      </Layout>
+    </AppBody>
   );
 }
 
