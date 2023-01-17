@@ -11,8 +11,8 @@ export const FlexContainer = styled.div<FlexContainerProps>`
   position: relative;
 `;
 
-export const BodyContainer = styled.div`
-  margin-left: 72px;
+export const BodyContainer = styled.div<BodyContainerProps>`
+  margin: ${(props) => props.margin};
   flex: 1;
 `;
 
@@ -22,4 +22,8 @@ interface FlexContainerProps {
   align?: string;
   flex?: string;
   gap?: string;
+}
+
+interface BodyContainerProps {
+  margin?: string;
 }

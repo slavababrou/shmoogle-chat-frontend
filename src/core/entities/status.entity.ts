@@ -1,3 +1,5 @@
-export class Status {
-  constructor(public id: number, public name: string) {}
+export enum UserStatus {
+  online = 1,
+  nobother,
+  offline,
 }

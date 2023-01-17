@@ -7,7 +7,17 @@ interface RoundButtonProps extends StyledRoundButtonProps {
 }
 // TODO: Add hints for buttons
 export const RoundButton: FC<RoundButtonProps> = (props: RoundButtonProps) => {
-  const { children, ...other } = props;
+  const { children, onClick, ...other } = props;
 
-  return <StyledRoundButton {...other}>{children}</StyledRoundButton>;
+  const onClickHandler = (event: any) => {
+    if (onClick) {
+      onClick(event.target.value);
+    }
+  };
+
+  return (
+    <StyledRoundButton {...other} onClick={onClickHandler}>
+      {children}
+    </StyledRoundButton>
+  );
 };

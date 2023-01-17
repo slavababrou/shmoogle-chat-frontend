@@ -5,19 +5,72 @@ import {
   IMessageService,
   UpdateMessageDto,
 } from "../../core/interfaces/message-service.interface";
+import { getAvailableId } from "../utils/get-available-id";
+import { UserService } from "./user.service";
 
 export class MessageService implements IMessageService {
+  userService = UserService.Instance;
+
   messages: Message[] = [
     {
       id: 1,
       chatId: 1,
-      user: new User(1, 2, "not a user", "none"),
+      user: this.userService.users[1],
       text: "text",
-      creationDate: new Date(),
+      creationDate: new Date().toString(),
       responses: [],
       isModified: false,
     },
+    {
+      id: 2,
+      chatId: 1,
+      user: this.userService.users[1],
+      text: "Sooo, let's check how that works? :->",
+      creationDate: new Date().toString(),
+      responses: [],
+      isModified: false,
+    },
+    {
+      id: 3,
+      chatId: 1,
+      user: this.userService.users[2],
+      text: "I think it will brake",
+      creationDate: new Date().toString(),
+      responses: [],
+      isModified: false,
+    },
+    {
+      id: 4,
+      chatId: 1,
+      user: this.userService.users[3],
+      text: "I am response!",
+      creationDate: new Date().toString(),
+      responses: [],
+      responseToId: 2,
+      isModified: false,
+    },
   ];
+
+  private static instance: MessageService;
+
+  public static get Instance() {
+    if (!this.instance) {
+      this.instance = new this();
+      this.instance.init();
+      return this.instance;
+    }
+
+    return this.instance;
+  }
+
+  private init() {
+    this.messages
+      .filter((message) => message.responseToId)
+      .forEach((message) => {
+        const msg = this.messages[message.responseToId! - 1];
+        msg.responses.push(message);
+      });
+  }
 
   async getAll(chatId?: number) {
     if (!chatId) {
@@ -32,7 +85,7 @@ export class MessageService implements IMessageService {
   }
 
   async create(instance: CreateMessageDto) {
-    const messageId = this.getAvailableId(this.messages);
+    const messageId = getAvailableId(this.messages);
     const { chatId, user, text, creationDate, file, responseToId } = instance;
     const message = new Message(
       messageId,
@@ -78,11 +131,5 @@ export class MessageService implements IMessageService {
 
     this.messages.splice(index, 1);
     return true;
-  }
-
-  private getAvailableId(array: Message[]) {
-    let id = 0;
-    array.forEach((instance) => (id = instance.id > id ? instance.id : id));
-    return id + 1;
   }
 }

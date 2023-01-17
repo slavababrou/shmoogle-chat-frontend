@@ -7,7 +7,7 @@ export class Message {
     public chatId: number,
     public user: User,
     public text: string,
-    public creationDate: Date,
+    public creationDate: string,
     public responses: Message[],
     public file?: any,
     public responseToId?: number | null,

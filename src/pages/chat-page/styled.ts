@@ -21,7 +21,7 @@ export const ChatPageBody = styled.div`
 
 export const ChatPageBodyOptions = styled.div`
   padding-left: 32px;
-  border-bottom: 1px solid black;
+  box-shadow: inset 0px -2px 0 rgb(100 121 143 / 12%);
 `;
 
 export const ChatPageBodyContent = styled.div`

@@ -12,7 +12,7 @@ export interface CreateMessageDto {
   chatId: number;
   user: User;
   text: string;
-  creationDate: Date;
+  creationDate: string;
   file?: any;
   responseToId?: number;
 }

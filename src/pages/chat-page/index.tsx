@@ -1,9 +1,12 @@
-import { FC, useId } from "react";
-import { ListCheckbox } from "../../components/ui/list-checkbox";
-import { OptionRadio } from "../../components/ui/option-radiobutton";
-import { RoundButton } from "../../components/ui/round-button";
-import { ChatInfo } from "../../core/entities/chat-info.entity";
-import { Chat } from "../../core/entities/chat.entity";
+import { FC, useId, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
+
+import { ChatRoom } from "components/chat-room";
+import { ListCheckbox } from "components/ui/list-checkbox";
+import { OptionRadio } from "components/ui/option-radiobutton";
+import { RoundButton } from "components/ui/round-button";
+import { routes } from "core/constants/routes";
+import { useAppSelector } from "shared/hooks/app-selector.hook";
 import {
   ChatPageBody,
   ChatPageFlexContainer,
@@ -13,16 +16,48 @@ import {
   ChatPageBodyOptions,
   ChatPageBodyContent,
 } from "./styled";
+import { Chat } from "core/entities/chat.entity";
 
-interface ChatPageProps {
-  chat: Chat;
-  chatInfo: ChatInfo;
+enum ChatPageOption {
+  chat = 1,
+  files,
+  tasks,
 }
 
-export const ChatPage: FC<ChatPageProps> = (props: ChatPageProps) => {
-  const { chat, chatInfo } = props;
+function renderSwitch(option: ChatPageOption, chat: Chat) {
+  switch (option) {
+    case ChatPageOption.chat:
+      return <ChatRoom chat={chat}></ChatRoom>;
+    case ChatPageOption.files:
+      return <></>;
+    case ChatPageOption.tasks:
+      return <></>;
+    default:
+      return <></>;
+  }
+}
 
+export const ChatPage: FC<{}> = () => {
   const radioName = useId();
+  const { id } = useParams();
+  const { chats } = useAppSelector((state) => state.userReducer);
+  const [currentOption, setCurrentOption] = useState(ChatPageOption.chat);
+
+  const onOptionChangeHandler = (event: any) => {
+    const { value } = event.target;
+    if (+value in ChatPageOption) {
+      setCurrentOption(+value);
+    }
+  };
+
+  if (!id) {
+    return <Navigate to={routes.welcome} />;
+  }
+  const chat = chats.find((item) => item.id === +id);
+
+  if (!chat) {
+    return <Navigate to={routes.welcome} />;
+  }
 
   return (
     <StyledChatPage>
@@ -44,7 +79,7 @@ export const ChatPage: FC<ChatPageProps> = (props: ChatPageProps) => {
               {chat.name}
               <ListCheckbox initialValue={true} />
             </div>
-            <label>{chatInfo.users.length} участник</label>
+            <label>{chat.users.length} участник</label>
           </ChatHeader>
           <ChatPageFlexContainer>
             <RoundButton size="24px" padding="8px">
@@ -70,19 +105,36 @@ export const ChatPage: FC<ChatPageProps> = (props: ChatPageProps) => {
       <ChatPageBody>
         <ChatPageBodyOptions>
           <ChatPageFlexContainer>
-            <OptionRadio name={radioName} value="1">
+            <OptionRadio
+              name={radioName}
+              value={ChatPageOption.chat}
+              checked={currentOption === ChatPageOption.chat}
+              onChange={onOptionChangeHandler}
+            >
               Чат
             </OptionRadio>
-            <OptionRadio name={radioName} value="2">
+            <OptionRadio
+              name={radioName}
+              value={ChatPageOption.files}
+              //checked={currentOption === ChatPageOption.files}
+              onChange={onOptionChangeHandler}
+            >
               Файлы
             </OptionRadio>
-            <OptionRadio name={radioName} value="3">
+            <OptionRadio
+              name={radioName}
+              value={ChatPageOption.tasks}
+              //checked={currentOption === ChatPageOption.tasks}
+              onChange={onOptionChangeHandler}
+            >
               Задачи
             </OptionRadio>
           </ChatPageFlexContainer>
         </ChatPageBodyOptions>
 
-        <ChatPageBodyContent />
+        <ChatPageBodyContent>
+          {renderSwitch(currentOption, chat)}
+        </ChatPageBodyContent>
       </ChatPageBody>
     </StyledChatPage>
   );

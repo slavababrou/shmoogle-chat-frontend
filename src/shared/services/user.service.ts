@@ -4,9 +4,10 @@ import {
   IUserService,
   UpdateUserDto,
 } from "../../core/interfaces/user-service.interface";
+import { getAvailableId } from "../utils/get-available-id";
 
 export class UserService implements IUserService {
-  private users: User[] = [
+  users: User[] = [
     {
       id: 1,
       login: "qwerty1@gmail.com",
@@ -35,6 +36,12 @@ export class UserService implements IUserService {
     },
   ];
 
+  private static instance: UserService;
+
+  public static get Instance() {
+    return this.instance || (this.instance = new this());
+  }
+
   async getAll() {
     return this.users;
   }
@@ -44,7 +51,7 @@ export class UserService implements IUserService {
   }
 
   async create(instance: CreateUserDto) {
-    const id = this.getAvailableId(this.users);
+    const id = getAvailableId(this.users);
     const { login, username } = instance;
     const user = new User(id, 1, username, login);
     return user;
@@ -74,11 +81,5 @@ export class UserService implements IUserService {
 
     this.users.splice(index, 1);
     return true;
-  }
-
-  private getAvailableId(array: User[]) {
-    let id = 0;
-    array.forEach((instance) => (id = instance.id > id ? instance.id : id));
-    return id + 1;
   }
 }

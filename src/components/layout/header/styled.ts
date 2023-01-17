@@ -5,7 +5,7 @@ export const StyledHeader = styled.div`
   padding: 8px;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid grey;
+  box-shadow: inset 0 -1px 0 rgb(100 121 143 / 12%);
   position: relative;
 `;
 

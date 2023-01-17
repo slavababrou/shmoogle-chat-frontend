@@ -1,29 +1,32 @@
-import { FC, ReactNode, useId } from "react";
+import { FC, ReactNode, useId, memo } from "react";
 import { StyledOptionRadio, StyledOptionRadioLabel } from "./styled";
 
 interface OptionRadioProps {
   children: ReactNode;
   name: string;
-  value: string;
+  value: any;
   checked?: boolean;
-  onClick?: (event?: any) => void;
+  onChange?: (event?: any) => void;
 }
 
-export const OptionRadio: FC<OptionRadioProps> = (props: OptionRadioProps) => {
-  const { children, name, value, checked, onClick } = props;
+export const OptionRadio: FC<OptionRadioProps> = memo(
+  (props: OptionRadioProps) => {
+    const { children, name, value, checked, onChange } = props;
 
-  const id = useId();
+    const id = useId();
 
-  return (
-    <>
-      <StyledOptionRadio
-        type="radio"
-        name={name}
-        id={id}
-        value={value}
-        checked={checked}
-      />
-      <StyledOptionRadioLabel htmlFor={id}>{children}</StyledOptionRadioLabel>
-    </>
-  );
-};
+    return (
+      <>
+        <StyledOptionRadio
+          type="radio"
+          name={name}
+          id={id}
+          value={value}
+          checked={checked}
+          onChange={onChange}
+        />
+        <StyledOptionRadioLabel htmlFor={id}>{children}</StyledOptionRadioLabel>
+      </>
+    );
+  }
+);

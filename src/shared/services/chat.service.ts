@@ -1,27 +1,63 @@
-import { ChatInfo } from "../../core/entities/chat-info.entity";
-import { Chat } from "../../core/entities/chat.entity";
+import { Chat } from "core/entities/chat.entity";
 import {
   CreateChatDto,
   IChatService,
   UpdateChatDto,
-} from "../../core/interfaces/chat-service.interface";
+} from "core/interfaces/chat-service.interface";
+import { getAvailableId } from "../utils/get-available-id";
+import { UserService } from "./user.service";
 
 export class ChatService implements IChatService {
-  private chats: Chat[] = [
-    { id: 1, name: "chat1", creatorId: 1 },
-    { id: 2, name: "chat2", creatorId: 2 },
-    { id: 3, name: "chat3", creatorId: 3 },
-    { id: 4, name: "chat4", creatorId: 4 },
-    { id: 5, name: "chat5", creatorId: 5 },
+  private userService = UserService.Instance;
+  chats: Chat[] = [
+    {
+      id: 1,
+      name: "chat1",
+      creatorId: 1,
+      users: [this.userService.users[0]],
+      messages: [],
+      creationDate: new Date().toString(),
+      isGroup: true,
+    },
+    {
+      id: 2,
+      name: "chat2",
+      creatorId: 2,
+      users: [this.userService.users[1]],
+      messages: [],
+      creationDate: new Date().toString(),
+    },
+    {
+      id: 3,
+      name: "chat3",
+      creatorId: 3,
+      users: [this.userService.users[2]],
+      messages: [],
+      creationDate: new Date().toString(),
+    },
+    {
+      id: 4,
+      name: "chat4",
+      creatorId: 4,
+      users: [this.userService.users[3]],
+      messages: [],
+      creationDate: new Date().toString(),
+    },
+    {
+      id: 5,
+      name: "chat5",
+      creatorId: 5,
+      users: [this.userService.users[4]],
+      messages: [],
+      creationDate: new Date().toString(),
+    },
   ];
 
-  private chatInfos: ChatInfo[] = [
-    { id: 1, chatId: 1, users: [], messages: [] },
-    { id: 2, chatId: 2, users: [], messages: [] },
-    { id: 3, chatId: 3, users: [], messages: [] },
-    { id: 4, chatId: 4, users: [], messages: [] },
-    { id: 5, chatId: 5, users: [], messages: [] },
-  ];
+  private static instance: ChatService;
+
+  public static get Instance() {
+    return this.instance || (this.instance = new this());
+  }
 
   async getAll() {
     return this.chats;
@@ -31,23 +67,34 @@ export class ChatService implements IChatService {
     return this.chats.find((chat) => chat.id === id) || null;
   }
 
-  async getChatInfo(id: number) {
-    return this.chatInfos.find((chatInfo) => chatInfo.chatId === id) || null;
+  async getByUserId(id: number) {
+    return this.chats.filter((chat) => {
+      return chat.users.find((user) => user.id == id);
+    });
   }
 
   async create(instance: CreateChatDto) {
-    const chatId = this.getAvailableId(this.chats);
-    const chatInfoId = this.getAvailableId(this.chatInfos);
+    const chatId = getAvailableId(this.chats);
+    const user = await this.userService.get(instance.creatorId);
+
+    if (!user) {
+      throw new Error("no such user");
+    }
 
     const chat = new Chat(
       chatId,
       instance.name,
       instance.creatorId,
+      instance.users || [],
+      [],
+      new Date().toString(),
+      instance.isHistorySaved,
+      instance.isGroup,
       instance.image
     );
-    const chatInfo = new ChatInfo(chatInfoId, chatId, [], []);
+    chat.users.push(user);
     this.chats.push(chat);
-    this.chatInfos.push(chatInfo);
+
     return chat;
   }
 
@@ -74,11 +121,5 @@ export class ChatService implements IChatService {
 
     this.chats.splice(index, 1);
     return true;
-  }
-
-  private getAvailableId(array: Chat[] | ChatInfo[]) {
-    let id = 0;
-    array.forEach((instance) => (id = instance.id > id ? instance.id : id));
-    return id + 1;
   }
 }
