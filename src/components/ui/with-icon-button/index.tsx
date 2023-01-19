@@ -1,9 +1,6 @@
-import { FC, ReactNode, memo } from "react";
-import {
-  IconWrapper,
-  ButtonWithIconName,
-  StyledButtonWithIcon,
-} from "./styled";
+import { FC, ReactNode, memo } from 'react';
+
+import { IconWrapper, ButtonWithIconName, StyledButtonWithIcon } from './styled';
 
 interface ButtonWithIconProps {
   name: string;
@@ -11,15 +8,17 @@ interface ButtonWithIconProps {
   onClick?: () => void;
 }
 
-export const ButtonWithIcon: FC<ButtonWithIconProps> = memo(
-  (props: ButtonWithIconProps) => {
-    const { name, children, onClick } = props;
+const ButtonWithIcon: FC<ButtonWithIconProps> = memo((props: ButtonWithIconProps) => {
+  const { name, children, onClick } = props;
 
-    return (
-      <StyledButtonWithIcon onClick={onClick}>
-        <IconWrapper>{children}</IconWrapper>
-        <ButtonWithIconName>{name}</ButtonWithIconName>
-      </StyledButtonWithIcon>
-    );
-  }
-);
+  return (
+    <StyledButtonWithIcon onClick={onClick}>
+      <IconWrapper>{children}</IconWrapper>
+      <ButtonWithIconName>{name}</ButtonWithIconName>
+    </StyledButtonWithIcon>
+  );
+});
+
+ButtonWithIcon.displayName = 'ButtonWithIcon';
+
+export default ButtonWithIcon;

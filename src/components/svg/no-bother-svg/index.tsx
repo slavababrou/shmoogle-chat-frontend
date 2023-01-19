@@ -1,16 +1,12 @@
-import { FC, memo } from "react";
+import { FC, memo } from 'react';
 
-export const NoBotherSvg: FC<{}> = memo(() => {
+import { SvgProps } from 'core/types/svg-props';
+
+const NoBotherSvg: FC<SvgProps> = memo((props: SvgProps) => {
   return (
     <svg width="12px" height="12px" viewBox="0 0 24 24" version="1.1">
-      <g
-        id="Page-1"
-        stroke="none"
-        stroke-width="1"
-        fill="none"
-        fill-rule="evenodd"
-      >
-        <g id="DND-(1)" fill-rule="nonzero">
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="DND-(1)" fillRule="nonzero">
           <path
             d="M12,24.0001 C5.38775,24.0001 0,18.6123 0,12.0001 C0,5.38782 5.38775,6.10352e-05 12,6.10352e-05 C18.6122,6.10352e-05 24,5.37615 24,12.0001 C24,18.6123 18.6122,24.0001 12,24.0001 Z"
             id="Path"
@@ -26,3 +22,7 @@ export const NoBotherSvg: FC<{}> = memo(() => {
     </svg>
   );
 });
+
+NoBotherSvg.displayName = 'NoBotherSvg';
+
+export default NoBotherSvg;

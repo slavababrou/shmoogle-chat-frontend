@@ -1,12 +1,9 @@
-import createSagaMiddleware from "@redux-saga/core";
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import sidebarReducer from "./reducers/sidebar.slice";
-import userReducer from "./reducers/user.slice";
-import sagas from "./sagas";
+import createSagaMiddleware from '@redux-saga/core';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+
+import sidebarReducer from './reducers/sidebar.slice';
+import userReducer from './reducers/user.slice';
+import sagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -1,5 +1,6 @@
-import { FC, ReactNode, useState } from "react";
-import { StyledTooltip, TooltipBox } from "./styled";
+import { FC, ReactNode, useState } from 'react';
+
+import { StyledTooltip, TooltipBox } from './styled';
 
 interface TooltipProps {
   children: ReactNode;
@@ -7,7 +8,7 @@ interface TooltipProps {
   delay?: number;
 }
 
-export const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
+const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
   const [show, setShow] = useState(false);
   const { text, children, delay = 500 } = props;
   let timeout: number;
@@ -25,12 +26,13 @@ export const Tooltip: FC<TooltipProps> = (props: TooltipProps) => {
   return (
     <StyledTooltip>
       <TooltipBox isVisible={show}>{text}</TooltipBox>
-      <div
-        onMouseEnter={() => setShowTrue()}
-        onMouseLeave={() => setShowFalse()}
-      >
+      <div onMouseEnter={() => setShowTrue()} onMouseLeave={() => setShowFalse()}>
         {children}
       </div>
     </StyledTooltip>
   );
 };
+
+Tooltip.displayName = 'Tooltip';
+
+export default Tooltip;

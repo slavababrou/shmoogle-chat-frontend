@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Chat } from "../../../core/entities/chat.entity";
-import { User } from "../../../core/entities/user.entity";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Chat } from 'core/entities/chat.entity';
+import { User } from 'core/entities/user.entity';
 
 interface UserState {
   user: User | null;
@@ -13,16 +14,20 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
-    fetchLoggedUser(state) {},
+    fetchLoggedUser(state) {
+      state;
+    },
 
     setLoggedUser(state, action: PayloadAction<User | null>) {
       state.user = action.payload;
     },
 
-    fetchUserChats(state) {},
+    fetchUserChats(state) {
+      state;
+    },
 
     setUserChats(state, action: PayloadAction<Chat[]>) {
       state.chats = action.payload;

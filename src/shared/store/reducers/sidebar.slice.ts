@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Chat } from "../../../core/entities/chat.entity";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Chat } from 'core/entities/chat.entity';
 
 interface SidebarState {
   isOpened: boolean;
@@ -20,7 +21,7 @@ const initialState: SidebarState = {
 };
 
 export const sidebarSlice = createSlice({
-  name: "sidebar",
+  name: 'sidebar',
   initialState,
   reducers: {
     setIsOpened(state, action: PayloadAction<boolean>) {

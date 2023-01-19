@@ -1,6 +1,6 @@
-import { FC, memo } from "react";
+import { FC, memo } from 'react';
 
-import { AvatarLabel, AvatarWrapper } from "./styled";
+import { AvatarLabel, AvatarWrapper } from './styled';
 
 interface AvatarProps {
   label: string;
@@ -8,12 +8,16 @@ interface AvatarProps {
   size?: string;
 }
 
-export const Avatar: FC<AvatarProps> = memo((props: AvatarProps) => {
+const Avatar: FC<AvatarProps> = memo((props: AvatarProps) => {
   const { label, src, size } = props;
 
   return (
-    <AvatarWrapper size={size || ""} background={src ? "#fff" : "purple"}>
+    <AvatarWrapper size={size || ''} background={src ? '#fff' : 'purple'}>
       {src ? <img src={src} /> : <AvatarLabel>{label}</AvatarLabel>}
     </AvatarWrapper>
   );
 });
+
+Avatar.displayName = 'Avatar';
+
+export default Avatar;

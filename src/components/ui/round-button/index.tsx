@@ -1,12 +1,14 @@
-import { FC, ReactNode } from "react";
-import { StyledRoundButton, StyledRoundButtonProps } from "./styled";
+import { FC, ReactNode } from 'react';
+
+import { StyledRoundButton, StyledRoundButtonProps } from './styled';
 
 interface RoundButtonProps extends StyledRoundButtonProps {
   children: ReactNode;
   onClick?: (event?: any) => void;
 }
-// TODO: Add hints for buttons
-export const RoundButton: FC<RoundButtonProps> = (props: RoundButtonProps) => {
+
+// TODO: Add hints for buttons, add inherited from html-a props
+const RoundButton: FC<RoundButtonProps> = (props: RoundButtonProps) => {
   const { children, onClick, ...other } = props;
 
   const onClickHandler = (event: any) => {
@@ -21,3 +23,7 @@ export const RoundButton: FC<RoundButtonProps> = (props: RoundButtonProps) => {
     </StyledRoundButton>
   );
 };
+
+RoundButton.displayName = 'RoundButton';
+
+export default RoundButton;
