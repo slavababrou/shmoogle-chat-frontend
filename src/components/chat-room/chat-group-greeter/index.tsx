@@ -6,19 +6,12 @@ import { routes } from 'core/constants/routes';
 import { useAppSelector } from 'shared/hooks/app-selector.hook';
 import { transformDate } from 'shared/utils/transform-date';
 import chatImage from 'assets/new_chat_room.png';
-import {
-  ChatGroupAction,
-  ChatGroupActionContainer,
-  ChatGroupGreeterDate,
-  ChatGroupGreeterHistoryInfo,
-  ChatGroupGreeterHistoryWho,
-  StyledChatGroupGreeter,
-} from './styled';
+import { ChatGroupAction, ChatGroupActionContainer, ChatGroupGreeterDate, StyledChatGroupGreeter } from './styled';
 import ButtonWithIcon from 'components/ui/with-icon-button';
-import ChatHistorySvg from 'components/svg/chat-history-svg';
 import AddUserSvg from 'components/svg/add-user-svg';
 import ShareFileSvg from 'components/svg/share-file-svg';
 import AddTasksSvg from 'components/svg/add-tasks-svg';
+import HistoryIndicator from '../history-indicator';
 
 interface ChatGroupGreeterProps {
   chat: Chat;
@@ -33,7 +26,7 @@ const ChatGroupGreeter: FC<ChatGroupGreeterProps> = memo((props: ChatGroupGreete
 
   const { chat } = props;
   const userId = user.id;
-  const creator = chat.users.find((user) => userId === user.id);
+  const creator = chat.users.find((user) => chat.creatorId === user.id);
   const [, , weekDay, monthDay, month] = transformDate(chat.creationDate);
 
   return (
@@ -46,43 +39,23 @@ const ChatGroupGreeter: FC<ChatGroupGreeterProps> = memo((props: ChatGroupGreete
       </ChatGroupGreeterDate>
       <ChatGroupActionContainer>
         <ChatGroupAction>
-          <ButtonWithIcon name="Добавить пользователей">
+          <ButtonWithIcon name="Добавить пользователей" outlined>
             <AddUserSvg />
           </ButtonWithIcon>
         </ChatGroupAction>
         <ChatGroupAction>
-          <ButtonWithIcon name="Поделиться файлом">
+          <ButtonWithIcon name="Поделиться файлом" outlined>
             <ShareFileSvg />
           </ButtonWithIcon>
         </ChatGroupAction>
         <ChatGroupAction>
-          <ButtonWithIcon name="Назначить задачи">
+          <ButtonWithIcon name="Назначить задачи" outlined>
             <AddTasksSvg />
           </ButtonWithIcon>
         </ChatGroupAction>
       </ChatGroupActionContainer>
       <div>
-        {chat.isHistorySaved ? (
-          <>
-            <ChatGroupGreeterHistoryWho>
-              <ChatHistorySvg size="20px" />
-              {'История включена\n'}
-            </ChatGroupGreeterHistoryWho>
-            <ChatGroupGreeterHistoryInfo>
-              Если история чата включена, отправленные сообщения сохраняются.
-            </ChatGroupGreeterHistoryInfo>
-          </>
-        ) : (
-          <>
-            <ChatGroupGreeterHistoryWho>
-              <ChatHistorySvg size="20px" />
-              {chat.creatorId === userId ? 'Вы выключили историю\n' : `${creator?.username} выключил историю`}
-            </ChatGroupGreeterHistoryWho>
-            <ChatGroupGreeterHistoryInfo>
-              Когда история отключена, сообщения удаляются через 24 часа.
-            </ChatGroupGreeterHistoryInfo>
-          </>
-        )}
+        <HistoryIndicator chat={chat} user={user} />
       </div>
     </StyledChatGroupGreeter>
   );

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledChatGroupGreeter = styled.div`
   display: flex;
@@ -12,13 +12,13 @@ export const StyledChatGroupGreeter = styled.div`
 
 export const ChatGroupGreeterDate = styled.label`
   font-size: 0.8rem;
-  color: grey;
+  color: ${({ theme }) => theme.text.secondaryColor};
 `;
 
 export const ChatGroupGreeterHistoryInfo = styled.label`
   display: block;
   text-align: center;
-  color: grey;
+  color: ${({ theme }) => theme.text.secondaryColor};
   font-size: 0.8rem;
 `;
 

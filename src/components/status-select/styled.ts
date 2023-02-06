@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledStatusSelect = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
   border-radius: 18px;
-  border: 1px solid #dadce0;
+  border: 1px solid ${({ theme }) => theme.button.outlineColor};
   height: 36px;
   margin-bottom: 4px;
   margin-right: 12px;

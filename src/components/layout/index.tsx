@@ -15,7 +15,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <FlexContainer width={'100%'} height={'100%'}>
+      <FlexContainer>
         <Sidebar />
         <BodyContainer margin={isActive ? '' : '0 0 0 72px'}>{children}</BodyContainer>
       </FlexContainer>

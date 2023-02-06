@@ -5,16 +5,23 @@ import { IconWrapper, ButtonWithIconName, StyledButtonWithIcon } from './styled'
 interface ButtonWithIconProps {
   name: string;
   children?: ReactNode;
+  color?: string;
+  outlined?: boolean;
+  textJustifyContentProperty?: string;
+  gap?: string;
   onClick?: () => void;
 }
 
 const ButtonWithIcon: FC<ButtonWithIconProps> = memo((props: ButtonWithIconProps) => {
-  const { name, children, onClick } = props;
+  const { name, children, onClick, color, textJustifyContentProperty, ...other } = props;
 
   return (
-    <StyledButtonWithIcon onClick={onClick}>
-      <IconWrapper>{children}</IconWrapper>
-      <ButtonWithIconName>{name}</ButtonWithIconName>
+    <StyledButtonWithIcon onClick={onClick} {...other}>
+      {children ? <IconWrapper color={color}>{children}</IconWrapper> : <></>}
+
+      <ButtonWithIconName color={color} justifyContent={textJustifyContentProperty}>
+        {name}
+      </ButtonWithIconName>
     </StyledButtonWithIcon>
   );
 });

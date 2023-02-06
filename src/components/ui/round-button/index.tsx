@@ -1,24 +1,24 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, AnchorHTMLAttributes } from 'react';
 
 import { StyledRoundButton, StyledRoundButtonProps } from './styled';
 
-interface RoundButtonProps extends StyledRoundButtonProps {
+interface RoundButtonProps extends StyledRoundButtonProps, AnchorHTMLAttributes<any> {
   children: ReactNode;
   onClick?: (event?: any) => void;
+  disabled?: boolean;
 }
 
-// TODO: Add hints for buttons, add inherited from html-a props
 const RoundButton: FC<RoundButtonProps> = (props: RoundButtonProps) => {
-  const { children, onClick, ...other } = props;
+  const { children, onClick, disabled, ...other } = props;
 
   const onClickHandler = (event: any) => {
-    if (onClick) {
-      onClick(event.target.value);
+    if (onClick && !disabled) {
+      onClick(event);
     }
   };
 
   return (
-    <StyledRoundButton {...other} onClick={onClickHandler}>
+    <StyledRoundButton {...other} disabled={disabled} onClick={onClickHandler}>
       {children}
     </StyledRoundButton>
   );

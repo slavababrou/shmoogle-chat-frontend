@@ -14,6 +14,7 @@ const MessageListItemResponses: FC<MessageListItemResponsesProps> = memo((props:
   const { message } = props;
 
   const [relative, time, , monthDay, month] = transformDate(message.creationDate);
+  const readableDate = monthDay + ` ${month.slice(0, 3)}, ` + time;
 
   if (!message.responses.length) {
     return <></>;
@@ -29,9 +30,7 @@ const MessageListItemResponses: FC<MessageListItemResponsesProps> = memo((props:
         </div>
         <label>{message.responses.length} ответа</label>
       </MessageResponsesCount>
-      <MessageResponsesLastDate>
-        {relative ? relative : monthDay + ` ${month.slice(0, 3)}, ` + time}
-      </MessageResponsesLastDate>
+      <MessageResponsesLastDate>{relative || readableDate}</MessageResponsesLastDate>
     </MessageResponsesContainer>
   );
 });

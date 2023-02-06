@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledListCheckbox = styled.input.attrs({
-  type: "checkbox",
+  type: 'checkbox',
 })`
   display: none;
 `;
@@ -16,12 +16,12 @@ export const StyledListCheckboxLabel = styled.label`
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     width: 0;
     height: 0;
     border-top: 4px solid transparent;
-    border-left: 8px solid black;
+    border-left: 8px solid ${({ theme }) => theme.text.primaryColor};
     border-bottom: 4px solid transparent;
     margin-top: 6px;
     margin-left: 1px;

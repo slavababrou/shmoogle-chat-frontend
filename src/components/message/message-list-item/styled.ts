@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MessageWrapper = styled.div<MessageWrapperProps>`
   display: flex;
@@ -6,20 +6,20 @@ export const MessageWrapper = styled.div<MessageWrapperProps>`
 `;
 
 export const MessageUserAvatar = styled.div<Hideable>`
-  display: ${(props) => (props.hidden ? "none" : "inherit")};
+  display: ${(props) => (props.hidden ? 'none' : 'inherit')};
   position: absolute;
   margin-left: -40px;
 `;
 
 export const MessageInfo = styled.div<Hideable>`
-  display: ${(props) => (props.hidden ? "none" : "flex")};
+  display: ${(props) => (props.hidden ? 'none' : 'flex')};
   align-items: baseline;
   gap: 5px;
   margin-top: -4px;
 `;
 
 export const MessageDate = styled.label`
-  color: grey;
+  color: ${({ theme }) => theme.text.secondaryColor};
   font-size: 0.7rem;
 `;
 

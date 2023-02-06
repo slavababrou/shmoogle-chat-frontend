@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MessageResponsesContainer = styled.div`
   display: flex;
@@ -11,10 +11,10 @@ export const MessageResponsesCount = styled.div`
   align-items: baseline;
   gap: 5px;
   font-weight: 600;
-  color: gray;
+  color: ${({ theme }) => theme.text.secondaryColor};
 `;
 
 export const MessageResponsesLastDate = styled.label`
-  color: grey;
+  color: ${({ theme }) => theme.text.secondaryColor};
   font-size: 0.8rem;
 `;

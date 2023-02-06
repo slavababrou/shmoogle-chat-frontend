@@ -1,10 +1,12 @@
 import { FC, memo } from 'react';
 
 import { SvgProps } from 'core/types/svg-props';
+import { StyledSvg } from '../styled';
 
 const NoBotherSvg: FC<SvgProps> = memo((props: SvgProps) => {
+  const { fill } = props;
   return (
-    <svg width="12px" height="12px" viewBox="0 0 24 24" version="1.1">
+    <StyledSvg width="12px" height="12px" viewBox="0 0 24 24" version="1.1" fill={fill}>
       <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="DND-(1)" fillRule="nonzero">
           <path
@@ -19,7 +21,7 @@ const NoBotherSvg: FC<SvgProps> = memo((props: SvgProps) => {
           ></path>
         </g>
       </g>
-    </svg>
+    </StyledSvg>
   );
 });
 

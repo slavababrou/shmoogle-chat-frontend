@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledChatListItem = styled.div`
   display: flex;
@@ -15,4 +15,9 @@ export const ChatListItemInfo = styled.div`
 
 export const ChatListActions = styled.div`
   display: flex;
+  align-items: center;
+`;
+
+export const ChatListItemLastMessage = styled.div`
+  font-size: 0.8rem;
 `;

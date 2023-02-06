@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ListHeader = styled.div`
   display: flex;
@@ -10,8 +10,9 @@ export const ListHeader = styled.div`
 export const ListBody = styled.div<ListBodyProps>`
   display: flex;
   flex-direction: column;
-  align-items: ${(props) => (props.isEmpty ? "center" : "")};
-  justify-content: ${(props) => (props.isEmpty ? "center" : "")};
+  gap: 10px;
+  align-items: ${(props) => (props.isEmpty ? 'center' : '')};
+  justify-content: ${(props) => (props.isEmpty ? 'center' : '')};
   height: 100%;
   padding: 0 4px 0 30px;
 `;
@@ -32,7 +33,7 @@ export const ChatListItemContainer = styled.div`
   margin-left: -30px;
   padding: 2px 0;
   padding-left: 30px;
-  background: #e6f4ea;
+  background: ${({ theme }) => theme.activeChatListItemBackgroundColor};
   &:hover {
     cursor: pointer;
   }
@@ -47,7 +48,7 @@ export const CheckboxContainer = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #5f6368;
+    background: ${({ theme }) => theme.hoverColor};
   }
 `;
 

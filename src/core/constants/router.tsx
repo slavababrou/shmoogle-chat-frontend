@@ -1,9 +1,10 @@
-import React, { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import { routes } from './routes';
 import App from 'App';
 import { ChatPage } from 'pages/chat-page';
 import { WelcomePage } from 'pages/welcome-page';
-import { routes } from './routes';
+import { DmPage } from 'pages/dm-page';
 
 export const router = createBrowserRouter([
   {
@@ -11,13 +12,21 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: routes.welcome,
         element: <WelcomePage />,
+        index: true,
       },
       {
-        path: routes.chat,
+        path: routes.chat + ':id',
         element: <ChatPage />,
       },
+      {
+        path: routes.dm + ':id',
+        element: <DmPage />,
+      },
     ],
+  },
+  {
+    path: routes.welcome,
+    element: <Navigate to={routes.home} />,
   },
 ]);

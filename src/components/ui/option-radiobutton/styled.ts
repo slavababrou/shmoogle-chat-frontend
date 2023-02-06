@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledOptionRadio = styled.input.attrs({
-  type: "radio",
+  type: 'radio',
 })`
   display: none;
 `;
@@ -16,20 +16,20 @@ export const StyledOptionRadioLabel = styled.label`
 
   &:hover {
     cursor: pointer;
-    background: rgba(60, 64, 67, 0.078);
+    background: ${({ theme }) => theme.hoverColor};
   }
 
   ${StyledOptionRadio}:checked + & {
-    color: blue;
+    color: ${({ theme }) => theme.button.textColor};
   }
 
   ${StyledOptionRadio}:checked + &::before {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     width: 50%;
     height: 4px;
-    background: blue;
+    background: ${({ theme }) => theme.button.textColor};
     border-radius: 3px 3px 0px 0px;
     margin-top: 23px;
   }

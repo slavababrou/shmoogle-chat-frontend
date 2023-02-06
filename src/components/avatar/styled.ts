@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const AvatarWrapper = styled.div<AvatarWrapperProps>`
   display: flex;
@@ -7,19 +7,22 @@ export const AvatarWrapper = styled.div<AvatarWrapperProps>`
   color: white;
   text-align: center;
   overflow: hidden;
-  width: ${(props) => `${props.size}` || "100%"};
-  height: ${(props) => `${props.size}` || "100%"};
-  border-radius: 50%;
-  background: ${(props) => props.background};
+  width: ${(props) => props.size || '100%'};
+  height: ${(props) => props.size || '100%'};
+  border-radius: ${(props) => props.borderRadius};
+  background: ${(props) => props.background || 'purple'};
   & img {
-    width: ${(props) => `${props.size}` || "100%"};
-    height: ${(props) => `${props.size}` || "100%"};
+    width: ${(props) => props.size || '100%'};
+    height: ${(props) => props.size || '100%'};
   }
 `;
 
-export const AvatarLabel = styled.label`
+//margin-top: -3px;
+export const AvatarLabel = styled.label<AvatarLabelProps>`
+  font-size: ${(props) => props.fontSize || '1rem'};
   user-select: none;
-  margin-top: -3px;
+  height: 100%;
+  line-height: ${(props) => props.lineHeight || '2rem'};
   &:hover {
     cursor: inherit;
   }
@@ -28,4 +31,10 @@ export const AvatarLabel = styled.label`
 interface AvatarWrapperProps {
   size?: string;
   background?: string;
+  borderRadius?: string;
+}
+
+interface AvatarLabelProps {
+  fontSize?: string;
+  lineHeight?: string;
 }

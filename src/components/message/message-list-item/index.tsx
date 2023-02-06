@@ -16,6 +16,7 @@ interface MessageListItemProps {
 const MessageListItem: FC<MessageListItemProps> = memo((props: MessageListItemProps) => {
   const { message, isManager, onlyText } = props;
   const [relative, time, , monthDay, monthString] = transformDate(message.creationDate);
+  const readableDate = `${monthDay} ${monthString.slice(0, 3)}., ${time}`;
 
   return (
     <MessageWrapper marginTop={onlyText ? '' : '20px'}>
@@ -33,7 +34,7 @@ const MessageListItem: FC<MessageListItemProps> = memo((props: MessageListItemPr
           ) : (
             <></>
           )}
-          <MessageDate>{relative ? relative : `${monthDay} ${monthString.slice(0, 3)}., ${time}`}</MessageDate>
+          <MessageDate>{relative || readableDate}</MessageDate>
         </MessageInfo>
         <MessageText>{message.text}</MessageText>
       </div>

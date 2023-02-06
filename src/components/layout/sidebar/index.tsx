@@ -1,6 +1,7 @@
 import { FC, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { routes } from 'core/constants/routes';
 import { sidebarActions } from 'shared/store/reducers/sidebar.slice';
 import { useAppDispatch } from 'shared/hooks/app-dispatch.hook';
 import { useAppSelector } from 'shared/hooks/app-selector.hook';
@@ -11,6 +12,8 @@ import meetIco from 'assets/meet.png';
 import RoundButton from '../../ui/round-button';
 import ChatList from '../../chat/chat-list';
 import ChatListItem from '../../chat/chat-list-item';
+import { AvatarVariants } from 'components/avatar';
+import ChatActionsMenu from 'components/chat/chat-actions-menu';
 
 const Sidebar: FC = memo(() => {
   const dispatch = useAppDispatch();
@@ -24,37 +27,41 @@ const Sidebar: FC = memo(() => {
   const groupChats = chats.filter((chat) => chat.isGroup);
   const privateChats = chats.filter((chat) => !chat.isGroup);
 
-  const onChatClick = useCallback((chatId: number) => {
-    navigate(`/chat/${chatId}`);
+  const chatClickHandler = useCallback((chatId: number) => {
+    navigate(`${routes.chat}${chatId}`);
   }, []);
 
-  const onMouseEnterHandler = useCallback(() => {
+  const dmClickHandler = useCallback((dmId: number) => {
+    navigate(`${routes.dm}${dmId}`);
+  }, []);
+
+  const mouseEnterHandler = useCallback(() => {
     if (!isActive) {
       dispatch(setIsOpened(true));
     }
   }, [isActive, setIsOpened]);
 
-  const onMouseLeaveHandler = useCallback(() => {
+  const mouseLeaveHandler = useCallback(() => {
     if (!isActive) {
       dispatch(setIsOpened(false));
     }
   }, [isActive, setIsOpened]);
 
-  const onOpenChatsHandler = useCallback(
+  const openChatsHandler = useCallback(
     (value: boolean) => {
       dispatch(setIsChatsOpen(value));
     },
     [setIsChatsOpen],
   );
 
-  const onOpenGroupsHandler = useCallback(
+  const openGroupsHandler = useCallback(
     (value: boolean) => {
       dispatch(setIsGroupsOpen(value));
     },
     [setIsGroupsOpen],
   );
 
-  const onOpenMeetsHandler = useCallback(
+  const openMeetsHandler = useCallback(
     (value: boolean) => {
       dispatch(setIsMeetsOpen(value));
     },
@@ -63,9 +70,9 @@ const Sidebar: FC = memo(() => {
 
   return (
     <StyledSidebar
-      onMouseEnter={onMouseEnterHandler}
-      onMouseLeave={onMouseLeaveHandler}
-      width={isOpened ? '400px' : ''}
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}
+      width={isOpened ? '300px' : ''}
       position={isActive ? 'relative' : 'fixed'}
     >
       {isOpened ? (
@@ -75,9 +82,10 @@ const Sidebar: FC = memo(() => {
               name="Чаты"
               chatItems={privateChats}
               tooltipAddText="Начать чат"
-              isOpened={isChatsOpen}
-              isOpenedHandler={onOpenChatsHandler}
-              onChatItemClicked={onChatClick}
+              isOpen={isChatsOpen}
+              isOpenHandler={openChatsHandler}
+              chatItemClickHandler={dmClickHandler}
+              menuElement={<ChatActionsMenu />}
             ></ChatList>
           </ChatListContainer>
           <ChatListContainer flex={isGroupsOpen ? '1' : ''}>
@@ -85,18 +93,20 @@ const Sidebar: FC = memo(() => {
               name="Группы"
               chatItems={groupChats}
               tooltipAddText="Создать или найти чат-группу"
-              isOpened={isGroupsOpen}
-              isOpenedHandler={onOpenGroupsHandler}
-              onChatItemClicked={onChatClick}
+              isOpen={isGroupsOpen}
+              isOpenHandler={openGroupsHandler}
+              chatItemClickHandler={chatClickHandler}
+              avatarVariant={AvatarVariants.square}
+              menuElement={<ChatActionsMenu />}
             ></ChatList>
           </ChatListContainer>
           <ChatListContainer flex={isMeetsOpen ? '1' : ''}>
             <ChatList
               name="Встречи"
               chatItems={[]}
-              isOpened={isMeetsOpen}
-              isOpenedHandler={onOpenMeetsHandler}
-              onChatItemClicked={onChatClick}
+              isOpen={isMeetsOpen}
+              isOpenHandler={openMeetsHandler}
+              chatItemClickHandler={chatClickHandler}
             ></ChatList>
           </ChatListContainer>
         </>
@@ -123,7 +133,7 @@ const Sidebar: FC = memo(() => {
             {isGroupsOpen ? (
               groupChats.map((chat) => (
                 <ChatListItemContainer key={chat.id}>
-                  <ChatListItem chat={chat} isSmall={true} />
+                  <ChatListItem chat={chat} isSmall={true} avatarVariant={AvatarVariants.square} />
                 </ChatListItemContainer>
               ))
             ) : (

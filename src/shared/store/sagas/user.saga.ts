@@ -1,6 +1,7 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 
 import { USER_TOKEN } from 'core/constants/tokens';
+import { DmService } from 'shared/services/dm.service';
 import { ChatService } from '../../services/chat.service';
 import { UserService } from '../../services/user.service';
 import { userActions } from '../reducers/user.slice';
@@ -17,6 +18,9 @@ export function* getUserWorker(): any {
 
     const chats = yield call((id) => ChatService.Instance.getByUserId(id), user.id);
     yield put(userActions.setUserChats(chats));
+
+    const dms = yield call((id) => DmService.Instance.getByOwnerId(id), user.id);
+    yield put(userActions.setUserDms(dms));
   }
 }
 

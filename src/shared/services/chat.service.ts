@@ -11,16 +11,22 @@ export class ChatService implements IChatService {
       name: 'chat1',
       creatorId: 1,
       users: [this.userService.users[0]],
-      messages: [],
       creationDate: new Date().toString(),
       isGroup: true,
+    },
+    {
+      id: 7,
+      name: 'chat7',
+      creatorId: 2,
+      users: [this.userService.users[0], this.userService.users[1]],
+      creationDate: new Date().toString(),
+      isGroup: false,
     },
     {
       id: 2,
       name: 'chat2',
       creatorId: 2,
       users: [this.userService.users[1]],
-      messages: [],
       creationDate: new Date().toString(),
     },
     {
@@ -28,7 +34,6 @@ export class ChatService implements IChatService {
       name: 'chat3',
       creatorId: 3,
       users: [this.userService.users[2]],
-      messages: [],
       creationDate: new Date().toString(),
     },
     {
@@ -36,7 +41,6 @@ export class ChatService implements IChatService {
       name: 'chat4',
       creatorId: 4,
       users: [this.userService.users[3]],
-      messages: [],
       creationDate: new Date().toString(),
     },
     {
@@ -44,7 +48,6 @@ export class ChatService implements IChatService {
       name: 'chat5',
       creatorId: 5,
       users: [this.userService.users[4]],
-      messages: [],
       creationDate: new Date().toString(),
     },
   ];
@@ -82,7 +85,6 @@ export class ChatService implements IChatService {
       instance.name,
       instance.creatorId,
       instance.users || [],
-      [],
       new Date().toString(),
       instance.isHistorySaved,
       instance.isGroup,

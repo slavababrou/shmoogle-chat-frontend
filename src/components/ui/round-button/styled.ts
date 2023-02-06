@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledRoundButton = styled.a<StyledRoundButtonProps>`
   border-radius: 50%;
-  width: ${(props) => props.size || "20px"};
-  height: ${(props) => props.size || "20px"};
+  width: ${(props) => props.size || '20px'};
+  height: ${(props) => props.size || '20px'};
   padding: ${(props) => props.padding};
   margin: ${(props) => props.margin};
   transition: background 0.2s ease;
@@ -11,9 +11,10 @@ export const StyledRoundButton = styled.a<StyledRoundButtonProps>`
   justify-content: center;
   align-items: center;
   color: #5f6368;
+  opacity: ${(props) => (props.disabled ? '0.8' : '1')};
   &:hover {
-    cursor: pointer;
-    background: rgba(60, 64, 67, 0.078);
+    cursor: ${(props) => (props.disabled ? '' : 'pointer')};
+    background: ${(props) => (props.disabled ? '' : props.theme.hoverColor)};
   }
 `;
 
@@ -21,4 +22,5 @@ export interface StyledRoundButtonProps {
   size?: string;
   padding?: string;
   margin?: string;
+  disabled?: boolean;
 }

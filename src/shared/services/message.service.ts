@@ -1,12 +1,8 @@
-import { Message } from "../../core/entities/message.entity";
-import { User } from "../../core/entities/user.entity";
-import {
-  CreateMessageDto,
-  IMessageService,
-  UpdateMessageDto,
-} from "../../core/interfaces/message-service.interface";
-import { getAvailableId } from "../utils/get-available-id";
-import { UserService } from "./user.service";
+import { Message } from '../../core/entities/message.entity';
+import { User } from '../../core/entities/user.entity';
+import { CreateMessageDto, IMessageService, UpdateMessageDto } from '../../core/interfaces/message-service.interface';
+import { getAvailableId } from '../utils/get-available-id';
+import { UserService } from './user.service';
 
 export class MessageService implements IMessageService {
   userService = UserService.Instance;
@@ -16,7 +12,7 @@ export class MessageService implements IMessageService {
       id: 1,
       chatId: 1,
       user: this.userService.users[1],
-      text: "text",
+      text: 'text',
       creationDate: new Date().toString(),
       responses: [],
       isModified: false,
@@ -34,7 +30,7 @@ export class MessageService implements IMessageService {
       id: 3,
       chatId: 1,
       user: this.userService.users[2],
-      text: "I think it will brake",
+      text: 'I think it will brake',
       creationDate: new Date().toString(),
       responses: [],
       isModified: false,
@@ -43,7 +39,7 @@ export class MessageService implements IMessageService {
       id: 4,
       chatId: 1,
       user: this.userService.users[3],
-      text: "I am response!",
+      text: 'I am response!',
       creationDate: new Date().toString(),
       responses: [],
       responseToId: 2,
@@ -84,20 +80,16 @@ export class MessageService implements IMessageService {
     return this.messages.find((message) => message.id === id) || null;
   }
 
+  async getLastMessage(id: number) {
+    const messages = await this.getAll(id);
+
+    return messages[messages.length - 1];
+  }
+
   async create(instance: CreateMessageDto) {
     const messageId = getAvailableId(this.messages);
-    const { chatId, user, text, creationDate, file, responseToId } = instance;
-    const message = new Message(
-      messageId,
-      chatId,
-      user,
-      text,
-      creationDate,
-      file,
-      [],
-      responseToId,
-      false
-    );
+    const { chatId, user, text, file, responseToId } = instance;
+    const message = new Message(messageId, chatId, user, text, new Date().toString(), [], file, responseToId, false);
     this.messages.push(message);
 
     if (responseToId) {
@@ -111,7 +103,7 @@ export class MessageService implements IMessageService {
     const message = await this.get(id);
 
     if (!message) {
-      throw new Error("no such message!");
+      throw new Error('no such message!');
     }
 
     const { text, file } = data;
@@ -126,7 +118,7 @@ export class MessageService implements IMessageService {
     const index = this.messages.findIndex((message) => message.id === id);
 
     if (index === -1) {
-      throw new Error("no such message");
+      throw new Error('no such message');
     }
 
     this.messages.splice(index, 1);

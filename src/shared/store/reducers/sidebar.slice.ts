@@ -8,7 +8,6 @@ interface SidebarState {
   isChatsOpen: boolean;
   isGroupsOpen: boolean;
   isMeetsOpen: boolean;
-  chats: Chat[];
 }
 
 const initialState: SidebarState = {
@@ -17,7 +16,6 @@ const initialState: SidebarState = {
   isChatsOpen: false,
   isGroupsOpen: false,
   isMeetsOpen: false,
-  chats: [],
 };
 
 export const sidebarSlice = createSlice({
@@ -38,9 +36,6 @@ export const sidebarSlice = createSlice({
     },
     setIsMeetsOpen(state, action: PayloadAction<boolean>) {
       state.isMeetsOpen = action.payload;
-    },
-    setChats(state, action: PayloadAction<Chat[]>) {
-      state.chats = action.payload;
     },
   },
 });

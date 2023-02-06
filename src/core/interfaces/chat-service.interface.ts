@@ -1,6 +1,6 @@
-import { Chat } from "../entities/chat.entity";
-import { User } from "../entities/user.entity";
-import { IGenericService } from "./generic-service.interface";
+import { Chat } from '../entities/chat.entity';
+import { User } from '../entities/user.entity';
+import { IGenericService } from './generic-service.interface';
 
 export interface IChatService extends IGenericService<Chat> {
   getByUserId(id: number): Promise<Chat[]>;

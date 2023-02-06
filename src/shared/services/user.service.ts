@@ -1,37 +1,33 @@
-import { User } from "../../core/entities/user.entity";
-import {
-  CreateUserDto,
-  IUserService,
-  UpdateUserDto,
-} from "../../core/interfaces/user-service.interface";
-import { getAvailableId } from "../utils/get-available-id";
+import { User } from '../../core/entities/user.entity';
+import { CreateUserDto, IUserService, UpdateUserDto } from '../../core/interfaces/user-service.interface';
+import { getAvailableId } from '../utils/get-available-id';
 
 export class UserService implements IUserService {
   users: User[] = [
     {
       id: 1,
-      login: "qwerty1@gmail.com",
-      username: "BeastMaster64",
+      login: 'qwerty1@gmail.com',
+      username: 'BeastMaster64',
       statusId: 1,
     },
-    { id: 2, login: "qwerty2@gmail.com", username: "Alex Fras", statusId: 2 },
+    { id: 2, login: 'qwerty2@gmail.com', username: 'Alex Fras', statusId: 2 },
     {
       id: 3,
-      login: "qwerty3@gmail.com",
-      username: "Christopher Nolan",
+      login: 'qwerty3@gmail.com',
+      username: 'Christopher Nolan',
       statusId: 1,
     },
     {
       id: 4,
-      login: "qwerty4@gmail.com",
-      username: "John Travolta",
+      login: 'qwerty4@gmail.com',
+      username: 'John Travolta',
       statusId: 2,
     },
-    { id: 5, login: "qwerty5@gmail.com", username: "Bruce Lee", statusId: 1 },
+    { id: 5, login: 'qwerty5@gmail.com', username: 'Bruce Lee', statusId: 1 },
     {
       id: 6,
-      login: "qwerty6@gmail.com",
-      username: "MirageMan441",
+      login: 'qwerty6@gmail.com',
+      username: 'MirageMan441',
       statusId: 1,
     },
   ];
@@ -61,7 +57,7 @@ export class UserService implements IUserService {
     const user = await this.get(id);
 
     if (!user) {
-      throw new Error("no such user");
+      throw new Error('no such user');
     }
 
     const { username, login, statusId, avatarUrl } = data;
@@ -76,7 +72,7 @@ export class UserService implements IUserService {
     const index = this.users.findIndex((user) => user.id === id);
 
     if (index === -1) {
-      throw new Error("no such user");
+      throw new Error('no such user');
     }
 
     this.users.splice(index, 1);

@@ -1,4 +1,4 @@
-import { FC, useState, memo } from 'react';
+import { FC, useState, memo, ChangeEvent, ReactNode } from 'react';
 
 import { Chat } from 'core/entities/chat.entity';
 import { ChatListItemContainer, CheckboxContainer, ListBody, ListContainer, ListHeader, NameContainer } from './styled';
@@ -8,55 +8,75 @@ import ListCheckbox from '../../ui/list-checkbox';
 import RoundButton from '../../ui/round-button';
 import PlusSvg from 'components/svg/plus-svg';
 import ChatSvg from 'components/svg/chat-svg';
+import { AvatarVariants } from 'components/avatar';
+import FloatingMenu from 'components/ui/floating-menu';
 
 interface ChatListProps {
   name: string;
   chatItems: Chat[];
-  isOpened?: boolean;
+  menuElement?: ReactNode;
+  isOpen?: boolean;
   tooltipAddText?: string;
-  isOpenedHandler?: (value: boolean) => void;
-  onChatItemClicked?: (id: number) => void;
+  avatarVariant?: AvatarVariants;
+  isOpenHandler?: (value: boolean) => void;
+  chatItemClickHandler?: (id: number) => void;
 }
 
 const ChatList: FC<ChatListProps> = memo((props: ChatListProps) => {
-  const { name, chatItems, tooltipAddText, isOpenedHandler, isOpened: isOpenedProp, onChatItemClicked } = props;
+  const {
+    name,
+    chatItems,
+    menuElement,
+    tooltipAddText,
+    isOpenHandler,
+    isOpen: isOpenProp,
+    chatItemClickHandler,
+    avatarVariant = AvatarVariants.round,
+  } = props;
 
-  const [isOpened, setIsOpened] = useState(isOpenedProp ?? false);
+  const [isOpen, setIsOpen] = useState(isOpenProp ?? false);
+  const [isMenuHidden, setMenuHidden] = useState(true);
 
-  const onOpenHandler = (event: any) => {
-    setIsOpened(event.target.checked);
-    if (isOpenedHandler) {
-      isOpenedHandler(event.target.checked);
+  const onOpenHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsOpen(event.target.checked);
+    if (isOpenHandler) {
+      isOpenHandler(event.target.checked);
     }
   };
 
-  const onChatItemClickedHandler = (id: number) => {
-    if (onChatItemClicked) {
-      onChatItemClicked(id);
+  const chatItemClickHandlerHandler = (id: number) => {
+    if (chatItemClickHandler) {
+      chatItemClickHandler(id);
     }
+  };
+
+  const addButtonClickHandler = () => {
+    setMenuHidden(false);
   };
 
   return (
     <ListContainer>
       <ListHeader>
         <CheckboxContainer>
-          <ListCheckbox onChecked={onOpenHandler} initialValue={isOpened} />
+          <ListCheckbox onChecked={onOpenHandler} initialValue={isOpen} />
         </CheckboxContainer>
 
         <NameContainer>{name}</NameContainer>
-        <Tooltip text={tooltipAddText || 'Добавить'}>
-          <RoundButton size="24px" padding="8px">
-            <PlusSvg />
-          </RoundButton>
-        </Tooltip>
+        <FloatingMenu element={menuElement} isHidden={isMenuHidden} setHidden={setMenuHidden} marginLeft="50px">
+          <Tooltip text={tooltipAddText || 'Добавить'}>
+            <RoundButton size="24px" padding="8px" onClick={addButtonClickHandler}>
+              <PlusSvg />
+            </RoundButton>
+          </Tooltip>
+        </FloatingMenu>
       </ListHeader>
       <ListBody isEmpty={!chatItems.length}>
-        {isOpened ? (
+        {isOpen ? (
           <>
             {chatItems.length ? (
               chatItems.map((chat: Chat) => (
-                <ChatListItemContainer key={chat.id} onClick={() => onChatItemClickedHandler(chat.id)}>
-                  <ChatListItem chat={chat} />
+                <ChatListItemContainer key={chat.id} onClick={() => chatItemClickHandlerHandler(chat.id)}>
+                  <ChatListItem chat={chat} avatarVariant={avatarVariant} />
                 </ChatListItemContainer>
               ))
             ) : (
