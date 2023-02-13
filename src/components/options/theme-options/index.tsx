@@ -11,6 +11,7 @@ const ThemeOptions: FC = () => {
 
   const themeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    console.log(event.target);
     if (value in themes) {
       setTheme(value);
     }

@@ -8,6 +8,7 @@ interface AvatarProps {
   background?: string;
   size?: string;
   variant?: AvatarVariants;
+  onClick?: (Event: any) => void;
 }
 
 export enum AvatarVariants {
@@ -16,7 +17,7 @@ export enum AvatarVariants {
 }
 
 const Avatar: FC<AvatarProps> = memo((props: AvatarProps) => {
-  const { label, src, background, size, variant = AvatarVariants.round } = props;
+  const { label, src, background, size, variant = AvatarVariants.round, onClick } = props;
   let fontSize = '';
   let lineHeight = '';
   if (size) {
@@ -25,7 +26,7 @@ const Avatar: FC<AvatarProps> = memo((props: AvatarProps) => {
   }
 
   return (
-    <AvatarWrapper size={size} background={background} borderRadius={variant}>
+    <AvatarWrapper size={size} background={background} borderRadius={variant} onClick={onClick}>
       {src ? (
         <img src={src} />
       ) : (

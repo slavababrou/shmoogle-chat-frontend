@@ -19,11 +19,14 @@ import AppsSvg from 'components/svg/apps-svg';
 import { routes } from 'core/constants/routes';
 import Modal from 'components/ui/modal';
 import OptionsList from 'components/options';
+import FloatingMenu from 'components/ui/floating-menu';
+import UserMenu from 'components/user-menu';
 
 const Header: FC = memo(() => {
   const dispatch = useAppDispatch();
   const { isActive } = useAppSelector((state) => state.sidebarReducer);
   const [isModalHidden, setModalHidden] = useState(true);
+  const [isUserMenuHidden, setUserMenuHidden] = useState(true);
 
   const { setIsActive, setIsOpened } = sidebarActions;
 
@@ -36,6 +39,14 @@ const Header: FC = memo(() => {
 
   const optionsClickHandler = () => {
     setModalHidden(false);
+  };
+
+  const userMenuHandler = (handler: boolean) => {
+    setUserMenuHidden(handler);
+  };
+
+  const toogleUserMenu = () => {
+    setUserMenuHidden(!isUserMenuHidden);
   };
 
   return (
@@ -78,7 +89,20 @@ const Header: FC = memo(() => {
             </Tooltip>
             <Tooltip text={`Аккаунт Shmoogle\n ${user?.username} \n ${user?.login}`}>
               <RoundButton size="32px" padding="4px">
-                <Avatar src={user?.avatarUrl} label={user?.username[0] || 'u'} />
+                <FloatingMenu
+                  element={<UserMenu />}
+                  isHidden={isUserMenuHidden}
+                  setHidden={userMenuHandler}
+                  marginLeft={'40px'}
+                  marginTop={'-10px'}
+                >
+                  <Avatar
+                    src={user?.avatarUrl}
+                    label={user?.username[0] || 'u'}
+                    onClick={toogleUserMenu}
+                    size={'30px'}
+                  />
+                </FloatingMenu>
               </RoundButton>
             </Tooltip>
           </FlexContainer>
